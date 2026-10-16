@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <title>Login | My Prime Era</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #fbf7f1;
+      font-family: -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", sans-serif;
+      color: #28262b;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 390px;
+      padding: 35px 25px;
+      background: #fffdf9;
+      border: 1px solid #eadfd6;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(91,54,39,.08);
+      text-align: center;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      color: #74152b;
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #77727a;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 14px;
+      border: 1px solid #eadfd6;
+      border-radius: 12px;
+      background: white;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #74152b;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #77727a;
+      font-size: 12px;
+    }
+  </style>
+
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+  </script>
+
+  <script defer src="./js/supabase.js"></script>
+  <script defer src="./js/auth.js"></script>
+</head>
+
+<body>
+  <div class="login-card">
+    <h1>My Prime Era</h1>
+
+    <p class="subtitle">
+      Your journey to your best self starts here.
+    </p>
+
+    <form id="loginForm">
+      <input
+        id="email"
+        type="email"
+        placeholder="Email address"
+        autocomplete="email"
+        required
+      >
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button id="loginBtn" type="submit">
+        Sign In
+      </button>
+    </form>
+
+    <p id="message" role="status"></p>
+
+    <div class="footer">
+      Progress. Consistency. Confidence.
+    </div>
+  </div>
+</body>
+</html>
