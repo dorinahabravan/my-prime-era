@@ -1,0 +1,627 @@
+
+/* ==========================================
+   MY PRIME ERA — AURORA CINEMATIC LOGIN
+========================================== */
+
+.prime-auth-scene {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100dvh;
+    padding: 24px;
+    overflow: hidden;
+    color: #ffffff;
+  
+    background:
+      radial-gradient(
+        ellipse at 15% 20%,
+        rgba(174,115,235,0.38),
+        transparent 48%
+      ),
+      radial-gradient(
+        ellipse at 85% 28%,
+        rgba(143,207,242,0.30),
+        transparent 48%
+      ),
+      linear-gradient(
+        155deg,
+        #777d91,
+        #55536f 48%,
+        #292b40
+      );
+  }
+  
+  /* ==========================================
+     CINEMATIC INTRO
+  ========================================== */
+  
+  .prime-cinematic-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #352d48;
+  }
+  
+  /* Aurora */
+  
+  .prime-intro-aurora {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  
+    background: linear-gradient(
+      120deg,
+      #534365,
+      #8e91a4,
+      #716087,
+      #b0b8c7,
+      #534365
+    );
+  
+    background-size: 300% 300%;
+    animation: primeBackgroundShift 12s ease-in-out infinite alternate;
+  }
+  
+  .prime-aurora-light {
+    position: absolute;
+    display: block;
+    width: 55vw;
+    height: 55vw;
+    min-width: 300px;
+    min-height: 300px;
+    border-radius: 50%;
+    filter: blur(75px);
+    pointer-events: none;
+  }
+  
+  .prime-light-one {
+    top: -20%;
+    left: -20%;
+    background: rgba(185,130,245,0.55);
+    animation: primeLightFloat 9s ease-in-out infinite alternate;
+  }
+  
+  .prime-light-two {
+    bottom: -30%;
+    right: -20%;
+    background: rgba(170,215,245,0.45);
+    animation: primeLightFloat 11s ease-in-out infinite alternate-reverse;
+  }
+  
+  .prime-light-three {
+    top: 30%;
+    left: 35%;
+    background: rgba(230,225,245,0.25);
+    animation: primeLightFloat 13s ease-in-out infinite alternate;
+  }
+  
+  /* ==========================================
+     INTRO IMAGE
+  ========================================== */
+  
+  .prime-intro-picture {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .prime-intro-gif {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+  
+  /* Cinematic shading */
+  
+  .prime-intro-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  
+    background: linear-gradient(
+      to bottom,
+      rgba(20,18,35,0.18),
+      transparent 35%,
+      transparent 60%,
+      rgba(25,20,40,0.58)
+    );
+  }
+  
+  /* ==========================================
+     SKIP INTRO
+  ========================================== */
+  
+  .prime-skip-intro {
+    position: absolute;
+    z-index: 10;
+    top: max(25px, env(safe-area-inset-top));
+    right: 25px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  
+    padding: 11px 17px;
+    border: 1px solid rgba(255,255,255,0.45);
+    border-radius: 30px;
+  
+    background: rgba(49,37,70,0.45);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  
+    box-shadow: 0 0 25px rgba(180,135,245,0.15);
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .prime-skip-intro:hover {
+    background: rgba(150,110,195,0.55);
+    transform: translateY(-2px);
+  }
+  
+  /* ==========================================
+     BOTTOM CAPTION
+  ========================================== */
+  
+  .prime-intro-bottom {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: max(48px, env(safe-area-inset-bottom));
+    padding: 0 20px;
+    text-align: center;
+  }
+  
+  .prime-intro-bottom p {
+    margin: 0 0 20px;
+    color: #ffffff;
+    font-size: clamp(10px,1.3vw,13px);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  }
+  
+  .prime-intro-progress {
+    width: 190px;
+    height: 3px;
+    margin: 18px auto 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.25);
+  }
+  
+  .prime-intro-progress > div {
+    width: 100%;
+    height: 100%;
+    transform-origin: left;
+    background: linear-gradient(
+      90deg,
+      #c6a0ff,
+      #ffffff,
+      #a8d9f4
+    );
+    box-shadow: 0 0 12px rgba(210,175,255,0.8);
+  }
+  
+  /* ==========================================
+     AUTH PANEL
+  ========================================== */
+  
+  .prime-auth-panel {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 28px;
+  
+    border-radius: 28px;
+    border: 1px solid rgba(240,225,255,0.38);
+  
+    background: linear-gradient(
+      145deg,
+      rgba(255,255,255,0.23),
+      rgba(184,155,225,0.13)
+    );
+  
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+  
+    box-shadow:
+      0 25px 70px rgba(0,0,0,0.2),
+      0 0 45px rgba(180,130,240,0.15);
+  
+    text-align: center;
+  }
+  
+  .prime-auth-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e4c7ff;
+    filter: drop-shadow(0 0 14px rgba(205,155,255,0.65));
+  }
+  
+  .prime-auth-brand {
+    margin-top: 12px;
+    color: #e8d0ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+  }
+  
+  .prime-auth-panel h1 {
+    margin: 22px 0 8px;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  
+  .prime-auth-subtitle {
+    margin: 0 0 26px;
+    color: #d2dce3;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  /* Tabs */
+  
+  .prime-auth-tabs {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.16);
+  }
+  
+  .prime-auth-tabs button {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #d6e0e6;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  .prime-auth-tabs button.selected {
+    background: linear-gradient(
+      120deg,
+      #e7d5ff,
+      #e6eff7
+    );
+    color: #343047;
+  }
+  
+  /* Form */
+  
+  .prime-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+  
+  .prime-auth-form input,
+  .prime-auth-form select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 13px 15px;
+  
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.25);
+  
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+  
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .prime-auth-form input::placeholder {
+    color: #d5dce2;
+  }
+  
+  .prime-auth-form input:focus,
+  .prime-auth-form select:focus {
+    border-color: #d6b8ff;
+    box-shadow: 0 0 0 3px rgba(190,145,245,0.22);
+  }
+  
+  .prime-auth-form select option {
+    color: #28313a;
+    background: #ffffff;
+  }
+  
+  /* Submit */
+  
+  .prime-auth-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  
+    width: 100%;
+    min-height: 50px;
+    margin-top: 7px;
+  
+    border: none;
+    border-radius: 13px;
+  
+    background: linear-gradient(
+      110deg,
+      #d6b8ff,
+      #ffffff,
+      #eac4e3,
+      #c7e6fa,
+      #d6b8ff
+    );
+  
+    background-size: 250% 100%;
+    color: #343047;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    animation: primeSilverShine 6s linear infinite;
+  }
+  
+  .prime-auth-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  
+  .prime-auth-error {
+    margin: 0;
+    color: #ffd2d8;
+    font-size: 12px;
+  }
+  
+  .prime-auth-message {
+    margin: 0;
+    color: #c9ffe2;
+    font-size: 12px;
+  }
+  
+  /* Footer */
+  
+  .prime-auth-footer {
+    margin: 23px 0 0;
+    color: #d2dce3;
+    font-size: 12px;
+  }
+  
+  .prime-auth-footer button {
+    margin-left: 5px;
+    padding: 3px;
+    border: none;
+    background: transparent;
+    color: #e4c7ff;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  
+  /* ==========================================
+     ANIMATIONS
+  ========================================== */
+  
+  @keyframes primeBackgroundShift {
+    0% {
+      background-position: 0% 40%;
+    }
+    100% {
+      background-position: 100% 60%;
+    }
+  }
+  
+  @keyframes primeLightFloat {
+    0% {
+      transform: translate(-8%,-5%) scale(0.9);
+    }
+    100% {
+      transform: translate(18%,15%) scale(1.25);
+    }
+  }
+  
+  @keyframes primeSilverShine {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: -100% 50%;
+    }
+  }
+  
+  /* ==========================================
+     DESKTOP
+  ========================================== */
+  
+  @media (min-width: 768px) {
+    .prime-intro-gif {
+      object-fit: contain;
+    }
+  }
+  
+  /* ==========================================
+     MOBILE — FULL SCREEN CINEMATIC
+  ========================================== */
+  
+  @media (max-width: 767px) {
+    .prime-cinematic-intro {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
+      background: #352d48;
+    }
+  
+    .prime-intro-picture {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  
+    /* Blurred background continuation */
+  
+    .prime-intro-picture::before {
+      content: "";
+      position: absolute;
+      inset: -35px;
+      z-index: 0;
+  
+      background-image: url("/intro/prime-intro.gif");
+      background-size: cover;
+      background-position: center;
+  
+      filter: blur(32px) brightness(0.65);
+      transform: scale(1.08);
+    }
+  
+    /* Fill entire phone screen */
+  
+    .prime-intro-picture .prime-intro-gif {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+  
+      width: 100%;
+      height: 100%;
+  
+      object-fit: cover;
+      object-position: center;
+    }
+  
+    .prime-intro-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(25,20,40,0.35) 0%,
+        transparent 25%,
+        transparent 60%,
+        rgba(25,20,40,0.72) 100%
+      );
+    }
+  
+    .prime-skip-intro {
+      top: max(20px, env(safe-area-inset-top));
+      right: 18px;
+      padding: 10px 16px;
+      z-index: 10;
+    }
+  
+    .prime-intro-bottom {
+      left: 0;
+      right: 0;
+      bottom: max(48px, env(safe-area-inset-bottom));
+      z-index: 10;
+      padding: 0 18px;
+    }
+  
+    .prime-intro-bottom p {
+      margin-bottom: 18px;
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      color: #ffffff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+    }
+  
+    .prime-intro-progress {
+      width: 180px;
+    }
+  
+    .prime-auth-scene {
+      padding: 18px;
+    }
+  
+    .prime-auth-panel {
+      padding: 30px 22px;
+      border-radius: 24px;
+    }
+  
+    .prime-auth-panel h1 {
+      font-size: 29px;
+    }
+  }
+  
+  @media (max-width: 380px) {
+    .prime-auth-panel {
+      padding: 28px 18px;
+    }
+  
+    .prime-auth-brand {
+      letter-spacing: 2px;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .prime-intro-aurora,
+    .prime-aurora-light,
+    .prime-auth-submit {
+      animation: none !important;
+    }
+  }
+  
+
+/* MOBILE — SHOW COMPLETE GIF WITHOUT CROPPING */
+
+@media (max-width: 767px) {
+    .prime-intro-picture {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  
+    .prime-intro-picture .prime-intro-gif {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+  
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+  
+    .prime-intro-picture::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+  
+      background-image: url("/intro/prime-intro.gif");
+      background-size: cover;
+      background-position: center;
+  
+      filter: blur(35px) brightness(0.65);
+      transform: scale(1.08);
+    }
+  }
+  

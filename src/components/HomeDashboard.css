@@ -1,0 +1,139 @@
+
+/* MY PRIME ERA — COMPACT HOME */
+
+.fit-home {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 8px;
+  }
+  
+  .fit-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 2px 3px 0;
+  }
+  
+  .fit-section-title h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 750;
+    letter-spacing: -.4px;
+    color: #352d41;
+  }
+  
+  .fit-section-title span {
+    color: #83758c;
+    font-size: 10px;
+  }
+  
+  .fit-stats {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 8px;
+  }
+  
+  .fit-stat {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 11px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,.7);
+    background:
+      linear-gradient(
+        140deg,
+        rgba(255,255,255,.55),
+        rgba(231,220,243,.28)
+      );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.8),
+      0 5px 14px rgba(58,45,76,.06);
+  }
+  
+  .fit-stat-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+    color: #80629d;
+  }
+  
+  .fit-stat-top span {
+    color: #6f617c;
+    font-size: 11px;
+    font-weight: 650;
+  }
+  
+  .fit-stat > strong {
+    color: #382e45;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  
+  .fit-stat > strong em {
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    color: #82758c;
+  }
+  
+  .fit-stat > small {
+    color: #877a90;
+    font-size: 9px;
+  }
+  
+  .fit-bar {
+    height: 4px;
+    overflow: hidden;
+    margin-top: 5px;
+    border-radius: 99px;
+    background: rgba(122,96,148,.13);
+  }
+  
+  .fit-bar > div {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg,#ba92df,#8860b6);
+    transition: width .3s ease;
+  }
+  
+  .fit-stat.water .fit-stat-top {
+    color: #4a9ba9;
+  }
+  
+  .fit-stat.water .fit-bar > div {
+    background: linear-gradient(90deg,#8ccbd6,#5b9faf);
+  }
+  
+  .fit-stat.meals .fit-stat-top {
+    color: #bd8a6d;
+  }
+  
+  .fit-stat.weekly .fit-stat-top {
+    color: #579e87;
+  }
+  
+  .fit-stat.weekly .fit-bar > div {
+    background: linear-gradient(90deg,#a5dfcb,#55a995);
+  }
+  
+  @media (max-width: 350px) {
+    .fit-home { gap: 7px; }
+    .fit-stats { gap: 6px; }
+    .fit-stat { padding: 9px; }
+    .fit-stat > strong { font-size: 17px; }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .fit-bar > div { transition: none; }
+  }
+  
