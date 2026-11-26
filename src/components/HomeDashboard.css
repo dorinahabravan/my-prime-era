@@ -136,4 +136,111 @@
   @media (prefers-reduced-motion: reduce) {
     .fit-bar > div { transition: none; }
   }
+
+  
+
+/* MY PRIME ERA — INTERACTIVE DAILY STATS */
+
+.fit-value-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    min-width: 0;
+  }
+  
+  .fit-value-row strong {
+    color: #382e45;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  
+  .fit-value-row strong em {
+    color: #82758c;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+  }
+  
+  .fit-value-row button,
+  .fit-step-editor button {
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(145, 111, 174, .18);
+    border-radius: 9px;
+    color: #805aa8;
+    background: rgba(255, 255, 255, .58);
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  
+  .fit-value-row button:active,
+  .fit-step-editor button:active {
+    transform: scale(.94);
+  }
+  
+  .fit-value-row button:disabled,
+  .fit-step-editor button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+  }
+  
+  .fit-counter-actions {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .fit-step-editor {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .fit-step-editor input {
+    width: 100%;
+    min-width: 0;
+    padding: 5px;
+    border: 1px solid rgba(145, 111, 174, .25);
+    border-radius: 8px;
+    background: rgba(255,255,255,.7);
+    color: #382e45;
+    font-size: 14px;
+  }
+  
+  .fit-save-error {
+    margin: 0;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(200, 65, 85, .09);
+    color: #a33b52;
+    font-size: 12px;
+  }
+  
+  .fit-saving {
+    margin: 0;
+    color: #80629d;
+    font-size: 11px;
+    text-align: center;
+  }
+  
+  @media (max-width: 350px) {
+    .fit-value-row strong {
+      font-size: 16px;
+    }
+  
+    .fit-value-row button {
+      width: 24px;
+      height: 24px;
+    }
+  
+    .fit-counter-actions {
+      gap: 2px;
+    }
+  }
+  
   

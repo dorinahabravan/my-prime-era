@@ -1,0 +1,968 @@
+
+/* ==========================================
+   MY PRIME ERA — FOOD DASHBOARD
+   PEARL AURORA PREMIUM
+   ========================================== */
+
+   .food-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 0 110px;
+    color: #372e43;
+  }
+  
+  /* ==========================================
+     NUTRITION CARD
+     ========================================== */
+  
+  .food-nutrition-card {
+    padding: 21px 20px 19px;
+    border-radius: 25px;
+  
+    border: 1px solid rgba(255,255,255,.92);
+  
+    background: linear-gradient(
+      145deg,
+      rgba(255,255,255,.82) 0%,
+      rgba(244,242,248,.74) 52%,
+      rgba(229,227,237,.68) 100%
+    );
+  
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.98),
+      0 10px 30px rgba(50,39,68,.065);
+  
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+  
+  .food-nutrition-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  
+  .food-eyebrow {
+    display: block;
+    color: #9371b0;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 1.25px;
+  }
+  
+  .food-calorie-number {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .food-calorie-number strong {
+    font-size: clamp(40px, 9vw, 52px);
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: -2.5px;
+    color: #342b40;
+  }
+  
+  .food-calorie-number > span {
+    color: #81768e;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  
+  .food-nutrition-sparkle {
+    display: grid;
+    place-items: center;
+    width: 37px;
+    height: 37px;
+    border-radius: 13px;
+  
+    color: #9873ba;
+  
+    background: rgba(255,255,255,.72);
+    border: 1px solid rgba(255,255,255,.9);
+  }
+  
+  /* ==========================================
+     MACRONUTRIENTS
+     ========================================== */
+  
+  .food-macros {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 8px;
+    margin-top: 19px;
+  }
+  
+  .food-macro {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  
+    min-width: 0;
+    min-height: 67px;
+    padding: 10px 4px 12px;
+  
+    border-radius: 15px;
+  
+    border: 1px solid rgba(255,255,255,.9);
+  
+    background: linear-gradient(
+      145deg,
+      rgba(255,255,255,.9),
+      rgba(235,233,241,.7)
+    );
+  
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.95),
+      0 3px 10px rgba(65,45,85,.025);
+  
+    overflow: hidden;
+  }
+  
+  .food-macro::after {
+    content: "";
+    position: absolute;
+    left: 17%;
+    right: 17%;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+  }
+  
+  .food-macro span {
+    font-size: 10px;
+    font-weight: 650;
+    color: #84798e;
+  }
+  
+  .food-macro strong {
+    font-size: clamp(11px, 3vw, 15px);
+    font-weight: 850;
+    letter-spacing: -.3px;
+    color: #51435d;
+    white-space: nowrap;
+  }
+  
+  .food-macro-protein::after {
+    background: #9fb7cb;
+  }
+  
+  .food-macro-carbs::after {
+    background: #d2b797;
+  }
+  
+  .food-macro-fat::after {
+    background: #bca4cb;
+  }
+  
+  .food-macro-fiber::after {
+    background: #9ebfaf;
+  }
+  
+  /* ==========================================
+     ACTION BUTTONS
+     ========================================== */
+  
+  .food-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 9px;
+  }
+  
+  .food-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  
+    width: 100%;
+    min-width: 0;
+    min-height: 49px;
+  
+    padding: 10px 7px;
+  
+    border-radius: 15px;
+  
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  
+    cursor: pointer;
+  
+    -webkit-tap-highlight-color: transparent;
+  
+    transition:
+      transform .2s ease,
+      background .2s ease,
+      box-shadow .2s ease,
+      border-color .2s ease;
+  }
+  
+  .food-action svg {
+    flex-shrink: 0;
+  }
+  
+  .food-action-light {
+    color: #69567b;
+  
+    border: 1px solid rgba(255,255,255,.95);
+  
+    background: linear-gradient(
+      145deg,
+      rgba(255,255,255,.88),
+      rgba(231,229,238,.82)
+    );
+  
+    box-shadow:
+      inset 0 1px 0 #fff,
+      0 5px 14px rgba(60,45,82,.04);
+  }
+  
+  .food-action-primary {
+    color: #fff;
+  
+    border: 1px solid rgba(191,154,221,.8);
+  
+    background: linear-gradient(
+      130deg,
+      #ad83cf,
+      #8058aa
+    );
+  
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.28),
+      0 7px 18px rgba(123,81,164,.16);
+  }
+  
+  @media (hover: hover) {
+    .food-action:hover {
+      transform: translateY(-2px);
+    }
+  
+    .food-action-light:hover {
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 8px 20px rgba(60,45,82,.09);
+    }
+  
+    .food-action-primary:hover {
+      background: linear-gradient(
+        130deg,
+        #b990d8,
+        #8860b3
+      );
+  
+      box-shadow: 0 10px 24px rgba(123,81,164,.25);
+    }
+  }
+  
+  .food-action:active {
+    transform: scale(.96);
+  }
+  
+  .food-action:focus-visible,
+  .food-delete-button:focus-visible,
+  .food-modal button:focus-visible {
+    outline: 2px solid #9d79bf;
+    outline-offset: 3px;
+  }
+  
+  /* Scanner is controlled by the three buttons */
+  .food-scanner-host {
+    width: 100%;
+    height: 0;
+    min-height: 0;
+    overflow: visible;
+  }
+  
+  /* Hide only the original scanner launcher,
+     not its portal/modal */
+  .food-scanner-host > .scanner-shell {
+    display: none;
+  }
+  
+  /* ==========================================
+     TODAY'S MEALS
+     ========================================== */
+  
+  .food-diary {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .food-diary-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 2px;
+  }
+  
+  .food-diary-heading h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 850;
+    letter-spacing: -.5px;
+    color: #372d42;
+  }
+  
+  .food-diary-heading p {
+    margin: 4px 0 0;
+    font-size: 11px;
+    color: #8c8195;
+  }
+  
+  .food-meal-count {
+    flex-shrink: 0;
+    padding: 6px 10px;
+  
+    border-radius: 99px;
+  
+    color: #887298;
+    font-size: 10px;
+    font-weight: 750;
+  
+    background: rgba(255,255,255,.48);
+    border: 1px solid rgba(255,255,255,.65);
+  }
+  
+  .food-meal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .food-meal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  
+    min-width: 0;
+    padding: 15px 14px 15px 16px;
+  
+    border-radius: 19px;
+  
+    border: 1px solid rgba(255,255,255,.92);
+  
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,.83),
+      rgba(242,240,247,.71)
+    );
+  
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.98),
+      0 5px 17px rgba(60,45,82,.04);
+  
+    transition:
+      transform .2s ease,
+      box-shadow .2s ease;
+  }
+  
+  @media (hover: hover) {
+    .food-meal:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(60,45,82,.07);
+    }
+  }
+  
+  .food-meal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .food-meal-content > strong {
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #40354b;
+  
+    overflow-wrap: anywhere;
+  }
+  
+  .food-meal-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  
+    font-size: 11px;
+    color: #8b7e95;
+  }
+  
+  .food-meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #b6a7c0;
+  }
+  
+  .food-meal-calories {
+    color: #755a91;
+    font-weight: 750;
+  }
+  
+  .food-meal-nutrients {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px 11px;
+  
+    color: #85798e;
+    font-size: 10px;
+    font-weight: 650;
+  }
+  
+  .food-fibre {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: #638b78;
+  }
+  
+  .food-delete-button {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  
+    width: 37px;
+    height: 37px;
+  
+    border-radius: 12px;
+  
+    border: 1px solid rgba(255,255,255,.95);
+  
+    color: #a5798f;
+  
+    background: rgba(255,255,255,.72);
+  
+    cursor: pointer;
+  
+    transition:
+      background .2s ease,
+      transform .2s ease;
+  }
+  
+  .food-delete-button:hover {
+    color: #b34e72;
+    background: rgba(255,238,244,.95);
+  }
+  
+  .food-delete-button:active {
+    transform: scale(.94);
+  }
+  
+  .food-delete-button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+  }
+  
+  /* ==========================================
+     EMPTY STATE
+     ========================================== */
+  
+  .food-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  
+    padding: 30px 18px;
+  
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.9);
+  
+    background: rgba(255,255,255,.58);
+  
+    text-align: center;
+  }
+  
+  .food-empty-icon {
+    display: grid;
+    place-items: center;
+  
+    width: 47px;
+    height: 47px;
+  
+    border-radius: 16px;
+  
+    color: #9777b3;
+    background: rgba(223,211,238,.48);
+  }
+  
+  .food-empty strong {
+    color: #45394f;
+    font-size: 13px;
+  }
+  
+  .food-empty p {
+    margin: 0;
+    color: #897d93;
+    font-size: 11px;
+  }
+  
+  /* ==========================================
+     MANUAL ADD MEAL MODAL
+     ========================================== */
+  
+  .food-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 16px;
+  
+    background: rgba(22,12,39,.68);
+  
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .food-modal {
+    width: min(100%, 470px);
+    max-height: min(85dvh, 750px);
+  
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  
+    padding: 22px;
+  
+    border-radius: 25px;
+  
+    border: 1px solid rgba(255,255,255,.95);
+  
+    background: linear-gradient(
+      155deg,
+      #faf9fc,
+      #eeebf5
+    );
+  
+    box-shadow:
+      0 28px 70px rgba(15,8,30,.3),
+      inset 0 1px 0 #fff;
+  
+    scrollbar-width: thin;
+  }
+  
+  .food-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  
+    margin-bottom: 21px;
+  }
+  
+  .food-modal-header h2 {
+    margin: 6px 0;
+    font-size: 23px;
+    letter-spacing: -.7px;
+    color: #372d42;
+  }
+  
+  .food-modal-header p {
+    margin: 0;
+    color: #877a91;
+    font-size: 12px;
+  }
+  
+  .food-modal-close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  
+    width: 39px;
+    height: 39px;
+  
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 13px;
+  
+    background: rgba(255,255,255,.72);
+    color: #826598;
+  
+    cursor: pointer;
+  }
+  
+  .food-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .food-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 13px;
+  }
+  
+  .food-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+  }
+  
+  .food-field > span {
+    color: #756683;
+    font-size: 11px;
+    font-weight: 750;
+  }
+  
+  .food-field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+  
+    padding: 11px 12px;
+  
+    border: 1px solid #dfd9e9;
+    border-radius: 12px;
+  
+    outline: none;
+  
+    background: rgba(255,255,255,.94);
+    color: #3b3048;
+  
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+  
+    transition:
+      border-color .2s ease,
+      box-shadow .2s ease;
+  }
+  
+  .food-field input:focus {
+    border-color: #a782c5;
+    box-shadow: 0 0 0 3px rgba(167,130,197,.12);
+  }
+  
+  .food-save-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  
+    min-height: 48px;
+    margin-top: 4px;
+  
+    border: none;
+    border-radius: 14px;
+  
+    background: linear-gradient(
+      125deg,
+      #aa80ce,
+      #8058aa
+    );
+  
+    color: white;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+  
+    cursor: pointer;
+  
+    box-shadow: 0 7px 20px rgba(123,81,164,.16);
+  }
+  
+  .food-save-button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+  
+  /* ==========================================
+     ERROR MESSAGE
+     ========================================== */
+  
+  .food-error {
+    margin: 0;
+    padding: 12px;
+  
+    border-radius: 12px;
+  
+    background: rgba(204,65,85,.09);
+    color: #a33b52;
+  
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  /* ==========================================
+     SMALL SCREENS
+     ========================================== */
+  
+  @media (max-width: 390px) {
+    .food-dashboard {
+      gap: 15px;
+    }
+  
+    .food-nutrition-card {
+      padding: 18px 14px;
+    }
+  
+    .food-macros {
+      gap: 5px;
+    }
+  
+    .food-macro {
+      padding: 9px 3px 11px;
+    }
+  
+    .food-macro span {
+      font-size: 9px;
+    }
+  
+    .food-action {
+      gap: 5px;
+      min-height: 46px;
+      padding: 8px 4px;
+      font-size: 10px;
+    }
+  
+    .food-action svg {
+      width: 15px;
+      height: 15px;
+    }
+  
+    .food-meal {
+      padding: 13px;
+    }
+  
+    .food-modal {
+      padding: 18px;
+    }
+  }
+  
+  /* ==========================================
+     REDUCED MOTION
+     ========================================== */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .food-action,
+    .food-meal,
+    .food-delete-button,
+    .food-field input {
+      transition: none;
+    }
+  }
+  
+
+/* ==========================================
+   MY PRIME ERA — PREMIUM NUTRITION ICONS
+   ========================================== */
+
+.food-macro {
+    gap: 5px;
+    min-height: 89px;
+    padding: 11px 4px 13px;
+  
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.93),
+      rgba(233, 230, 241, 0.73)
+    );
+  
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      background 0.25s ease;
+  }
+  
+  .food-macro-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 19px;
+    height: 19px;
+    margin-bottom: 2px;
+    filter: drop-shadow(
+      0 2px 4px rgba(100, 80, 120, 0.08)
+    );
+  }
+  
+  .food-macro-protein .food-macro-icon {
+    color: #83a6c8;
+  }
+  
+  .food-macro-carbs .food-macro-icon {
+    color: #c6a66e;
+  }
+  
+  .food-macro-fat .food-macro-icon {
+    color: #ae8bc5;
+  }
+  
+  .food-macro-fiber .food-macro-icon {
+    color: #80ad9b;
+  }
+  
+  .food-macro span {
+    font-size: 10px;
+    font-weight: 650;
+  }
+  
+  .food-macro strong {
+    font-size: clamp(11px, 3vw, 15px);
+    font-weight: 850;
+  }
+  
+  @media (hover: hover) {
+    .food-macro:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow:
+        0 9px 20px rgba(74, 51, 100, 0.09),
+        inset 0 1px 0 #fff;
+    }
+  }
+  
+  /* ==========================================
+     SCAN FOOD — VIOLET AURORA GLASS
+     ========================================== */
+  
+  .food-action-primary {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  
+    color: #ffffff;
+  
+    border: 1px solid rgba(224, 199, 245, 0.88);
+  
+    background: linear-gradient(
+      120deg,
+      rgba(189, 151, 218, 0.96) 0%,
+      rgba(159, 111, 196, 0.98) 38%,
+      rgba(123, 80, 164, 0.98) 75%,
+      rgba(167, 125, 201, 0.96) 100%
+    );
+  
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  
+    box-shadow:
+      0 8px 22px rgba(119, 75, 161, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(90, 48, 133, 0.12);
+  
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      filter 0.25s ease;
+  }
+  
+  /* Animated glass reflection */
+  
+  .food-action-primary::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+  
+    top: -80%;
+    bottom: -80%;
+    left: -85%;
+    width: 45%;
+  
+    transform: skewX(-22deg);
+  
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.52) 50%,
+      rgba(255, 255, 255, 0.1) 80%,
+      transparent 100%
+    );
+  
+    pointer-events: none;
+  
+    animation: food-aurora-shine 5.5s ease-in-out infinite;
+  }
+  
+  .food-action-primary > svg,
+  .food-action-primary > span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  @keyframes food-aurora-shine {
+    0%, 15% {
+      left: -85%;
+    }
+  
+    55%, 100% {
+      left: 150%;
+    }
+  }
+  
+  /* Premium hover */
+  
+  @media (hover: hover) {
+    .food-action-primary:hover {
+      transform: translateY(-2px);
+  
+      background: linear-gradient(
+        120deg,
+        #c19cdd 0%,
+        #a779cc 40%,
+        #8558b0 78%,
+        #b58ad2 100%
+      );
+  
+      box-shadow:
+        0 12px 27px rgba(119, 75, 161, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+  }
+  
+  .food-action-primary:active {
+    transform: scale(0.97);
+  }
+  
+  /* Small mobile screens */
+  
+  @media (max-width: 390px) {
+    .food-macro {
+      min-height: 82px;
+      gap: 4px;
+      padding: 9px 2px 11px;
+    }
+  
+    .food-macro-icon {
+      width: 17px;
+      height: 17px;
+    }
+  }
+  
+  /* Accessibility */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .food-action-primary::before {
+      animation: none;
+    }
+  
+    .food-macro,
+    .food-action-primary {
+      transition: none;
+    }
+  }
+  

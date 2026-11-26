@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import type { User } from "@supabase/supabase-js";
-
+import FoodDashboard from "./components/FoodDashboard";
 import {
   House,
   Dumbbell,
@@ -100,7 +100,7 @@ export default function App() {
 
         if (cancelled) return;
 
-        setProgress(savedProgress);
+        setProgress(savedProgress ?? {});
         setLoadError("");
       } catch (error) {
         if (cancelled) return;
@@ -264,8 +264,11 @@ export default function App() {
         {!loading && !loadError && progress && (
           <>
             {activePage === "Home" && (
-              <HomeDashboard progress={progress} />
-            )}
+              <HomeDashboard
+  progress={progress}
+  onProgressChange={setProgress}
+/>
+)}
 
             {activePage === "Train" && (
               <section className="prime-page">
@@ -277,15 +280,13 @@ export default function App() {
               </section>
             )}
 
-            {activePage === "Food" && (
-              <section className="prime-page">
-                <h1>Nutrition</h1>
-                <p>
-                  Your meals and AI Food Scanner
-                  will be connected here.
-                </p>
-              </section>
-            )}
+{activePage === "Food" && (
+  <FoodDashboard
+    progress={progress}
+    onProgressChange={setProgress}
+  />
+)}
+            
 
             {activePage === "Progress" && (
               <section className="prime-page">

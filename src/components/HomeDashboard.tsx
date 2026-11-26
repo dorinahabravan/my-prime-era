@@ -1,16 +1,30 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import {
   Footprints,
   Droplets,
   Utensils,
-  TrendingUp
+  TrendingUp,
+  Plus,
+  Minus,
+  Pencil,
+  Check,
+  X
 } from "lucide-react";
 
 import PrimeHero from "./PrimeHero";
 import WorkoutCalendar from "./WorkoutCalendar";
-import type { PrimeProgress } from "../lib/progress";
+
+import {
+  type PrimeProgress,
+  type DailyMetric,
+  dateKey,
+  mondayOf,
+  isWorkoutDayCompleted,
+  saveDailyMetric
+} from "../lib/progress";
+
 import {
   getWorkoutPlan,
   isPlannedWorkout
@@ -20,82 +34,105 @@ import "./HomeDashboard.css";
 
 type Props = {
   progress: PrimeProgress;
+  onProgressChange: (progress: PrimeProgress) => void;
 };
 
-function dateKey(date: Date): string {
-  return [
-    date.getFullYear(),
-    String(date.getMonth() + 1).padStart(2, "0"),
-    String(date.getDate()).padStart(2, "0")
-  ].join("-");
-}
-
-export default function HomeDashboard({ progress }: Props) {
-  const [currentProgress, setCurrentProgress] = useState(progress);
-
-  useEffect(() => {
-    setCurrentProgress(progress);
-  }, [progress]);
+export default function HomeDashboard({
+  progress,
+  onProgressChange
+}: Props) {
+  const [editingSteps, setEditingSteps] = useState(false);
+  const [stepsInput, setStepsInput] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   const today = new Date();
   const todayKey = dateKey(today);
-
-  const daily = currentProgress.daily?.[todayKey];
+  const daily = progress.daily?.[todayKey];
 
   const steps = daily?.steps ?? 0;
-  const stepGoal = currentProgress.stepGoal ?? 6000;
+  const stepGoal = progress.stepGoal ?? 6000;
   const water = daily?.water ?? 0;
   const meals = daily?.meals ?? 0;
 
-  const monday = new Date(today);
-  monday.setHours(12, 0, 0, 0);
-  monday.setDate(
-    monday.getDate() - ((monday.getDay() + 6) % 7)
-  );
+  const monday = mondayOf(today);
+  const plan = getWorkoutPlan(progress, dateKey(monday));
 
-  const plan = getWorkoutPlan(currentProgress, dateKey(monday));
   const plannedCount = plan.filter(isPlannedWorkout).length;
-
-  const rawChecks = currentProgress.workoutChecks;
-  const checks =
-    rawChecks && typeof rawChecks === "object" && !Array.isArray(rawChecks)
-      ? rawChecks as Record<string, Record<string, boolean>>
-      : {};
 
   const completedCount = plan.filter((day, index) => {
     if (!isPlannedWorkout(day)) return false;
 
     const date = new Date(monday);
     date.setDate(monday.getDate() + index);
-    const dayChecks = checks[dateKey(date)] ?? {};
 
-    const required = day.items
-      .map((item, i) => ({ item, i }))
-      .filter(({ item }) =>
-        item.type !== "recovery" && item.type !== "stretch"
-      );
-
-    return required.length > 0 &&
-      required.every(({ i }) => dayChecks[String(i)] === true);
+    return isWorkoutDayCompleted(
+      progress,
+      dateKey(date)
+    );
   }).length;
 
-  const stepsPercent = Math.min(
-    100, (steps / Math.max(stepGoal, 1)) * 100
-  );
+  const percent = (value: number, goal: number) =>
+    Math.min(100, (value / Math.max(goal, 1)) * 100);
 
-  const waterPercent = Math.min(100, (water / 8) * 100);
+  async function updateMetric(
+    metric: DailyMetric,
+    value: number
+  ) {
+    if (saving) return;
 
-  const weeklyPercent = plannedCount
-    ? (completedCount / plannedCount) * 100
-    : 0;
+    setSaving(true);
+    setError("");
+
+    try {
+      const saved = await saveDailyMetric(
+        todayKey,
+        metric,
+        Math.max(0, value)
+      );
+
+      onProgressChange(saved);
+    } catch (reason) {
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "Could not save your progress."
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function saveSteps() {
+    const trimmed = stepsInput.trim();
+
+    if (!/^\d+$/.test(trimmed)) {
+      setError("Enter a valid number of steps.");
+      return;
+    }
+
+    const value = Number(trimmed);
+
+    if (!Number.isSafeInteger(value)) {
+      setError("The step count is too large.");
+      return;
+    }
+
+    void updateMetric("steps", value).then(() => {
+      // Close the editor only after a successful save.
+      // Errors remain visible in the dashboard.
+    });
+
+    setEditingSteps(false);
+  }
 
   return (
     <div className="fit-home">
-      <PrimeHero progress={currentProgress} />
+      <PrimeHero progress={progress} />
 
       <WorkoutCalendar
-        progress={currentProgress}
-        onProgressChange={setCurrentProgress}
+        progress={progress}
+        onProgressChange={onProgressChange}
       />
 
       <div className="fit-section-title">
@@ -108,64 +145,157 @@ export default function HomeDashboard({ progress }: Props) {
         </span>
       </div>
 
+      {error && (
+        <p className="fit-save-error" role="alert">
+          {error}
+        </p>
+      )}
+
       <section className="fit-stats">
-        <motion.div
-          className="fit-stat steps"
-          whileTap={{ scale: .98 }}
-        >
+        <motion.div className="fit-stat steps" whileTap={{ scale: 0.99 }}>
           <div className="fit-stat-top">
             <Footprints size={16} />
             <span>Steps</span>
           </div>
-          <strong>{steps.toLocaleString("en-GB")}</strong>
+
+          {editingSteps ? (
+            <div className="fit-step-editor">
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={stepsInput}
+                onChange={e => setStepsInput(e.target.value)}
+                aria-label="Steps today"
+              />
+              <button
+                type="button"
+                onClick={saveSteps}
+                disabled={saving}
+                aria-label="Save steps"
+              >
+                <Check size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditingSteps(false)}
+                aria-label="Cancel"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          ) : (
+            <div className="fit-value-row">
+              <strong>{steps.toLocaleString("en-GB")}</strong>
+              <button
+                type="button"
+                disabled={saving}
+                onClick={() => {
+                  setStepsInput(String(steps));
+                  setEditingSteps(true);
+                  setError("");
+                }}
+                aria-label="Edit steps"
+              >
+                <Pencil size={14} />
+              </button>
+            </div>
+          )}
+
           <small>Goal {stepGoal.toLocaleString("en-GB")}</small>
           <div className="fit-bar">
-            <div style={{ width: `${stepsPercent}%` }} />
+            <div style={{ width: `${percent(steps, stepGoal)}%` }} />
           </div>
         </motion.div>
 
-        <motion.div
-          className="fit-stat water"
-          whileTap={{ scale: .98 }}
-        >
+        <motion.div className="fit-stat water" whileTap={{ scale: 0.99 }}>
           <div className="fit-stat-top">
             <Droplets size={16} />
             <span>Water</span>
           </div>
-          <strong>{water} <em>glasses</em></strong>
+
+          <div className="fit-value-row">
+            <strong>{water} <em>glasses</em></strong>
+            <div className="fit-counter-actions">
+              <button
+                type="button"
+                disabled={saving || water === 0}
+                onClick={() => void updateMetric("water", water - 1)}
+                aria-label="Remove one glass"
+              >
+                <Minus size={14} />
+              </button>
+              <button
+                type="button"
+                disabled={saving}
+                onClick={() => void updateMetric("water", water + 1)}
+                aria-label="Add one glass"
+              >
+                <Plus size={14} />
+              </button>
+            </div>
+          </div>
+
           <small>Goal 8 glasses</small>
           <div className="fit-bar">
-            <div style={{ width: `${waterPercent}%` }} />
+            <div style={{ width: `${percent(water, 8)}%` }} />
           </div>
         </motion.div>
 
-        <motion.div
-          className="fit-stat meals"
-          whileTap={{ scale: .98 }}
-        >
+        <motion.div className="fit-stat meals" whileTap={{ scale: 0.99 }}>
           <div className="fit-stat-top">
             <Utensils size={16} />
             <span>Meals</span>
           </div>
-          <strong>{meals}</strong>
+
+          <div className="fit-value-row">
+            <strong>{meals}</strong>
+            <div className="fit-counter-actions">
+              <button
+                type="button"
+                disabled={saving || meals === 0}
+                onClick={() => void updateMetric("meals", meals - 1)}
+                aria-label="Remove one meal"
+              >
+                <Minus size={14} />
+              </button>
+              <button
+                type="button"
+                disabled={saving}
+                onClick={() => void updateMetric("meals", meals + 1)}
+                aria-label="Add one meal"
+              >
+                <Plus size={14} />
+              </button>
+            </div>
+          </div>
+
           <small>Meals recorded</small>
         </motion.div>
 
-        <motion.div
-          className="fit-stat weekly"
-          whileTap={{ scale: .98 }}
-        >
+        <motion.div className="fit-stat weekly" whileTap={{ scale: 0.99 }}>
           <div className="fit-stat-top">
             <TrendingUp size={16} />
             <span>Weekly</span>
           </div>
+
           <strong>{completedCount}/{plannedCount}</strong>
           <small>Days completed</small>
           <div className="fit-bar">
-            <div style={{ width: `${weeklyPercent}%` }} />
+            <div
+              style={{
+                width: `${percent(completedCount, plannedCount)}%`
+              }}
+            />
           </div>
         </motion.div>
       </section>
+
+      {saving && (
+        <p className="fit-saving" role="status">
+          Saving your progress...
+        </p>
+      )}
     </div>
   );
 }

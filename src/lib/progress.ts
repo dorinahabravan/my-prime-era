@@ -251,3 +251,213 @@ export async function saveWorkoutCheck(
 
   return updated;
 }
+
+
+export type DailyMetric = "steps" | "water" | "meals";
+
+export async function saveDailyMetric(
+  dayKey: string,
+  metric: DailyMetric,
+  value: number
+): Promise<PrimeProgress> {
+  if (!parseDateKey(dayKey)) {
+    throw new Error("Invalid date.");
+  }
+
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw new Error("Please enter a valid positive number.");
+  }
+
+  const { data: auth, error: authError } =
+    await supabase.auth.getUser();
+
+  if (authError) throw authError;
+
+  if (!auth.user) {
+    throw new Error("Please sign in to save progress.");
+  }
+
+  const { data: stored, error: readError } =
+    await supabase
+      .from("user_progress")
+      .select("data")
+      .eq("user_id", auth.user.id)
+      .maybeSingle();
+
+  if (readError) throw readError;
+
+  const existing: PrimeProgress =
+    stored?.data &&
+    typeof stored.data === "object" &&
+    !Array.isArray(stored.data)
+      ? stored.data as PrimeProgress
+      : {};
+
+  const updated: PrimeProgress = {
+    ...existing,
+    daily: {
+      ...(existing.daily ?? {}),
+      [dayKey]: {
+        ...(existing.daily?.[dayKey] ?? {}),
+        [metric]: value
+      }
+    }
+  };
+
+  const { error: writeError } =
+    await supabase
+      .from("user_progress")
+      .upsert(
+        {
+          user_id: auth.user.id,
+          data: updated
+        },
+        { onConflict: "user_id" }
+      );
+
+  if (writeError) throw writeError;
+
+  return updated;
+}
+
+
+export type FoodEntry = {
+    id: string;
+    name: string;
+    grams: number;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber?: number;
+    createdAt: string;
+  };
+  
+  export type FoodDiary = Record<string, FoodEntry[]>;
+  
+  export async function saveFoodDiaryEntry(
+    dayKey: string,
+    entry: FoodEntry
+  ): Promise<PrimeProgress> {
+    if (!parseDateKey(dayKey)) {
+      throw new Error("Invalid date.");
+    }
+  
+    const { data: auth, error: authError } =
+      await supabase.auth.getUser();
+  
+    if (authError) throw authError;
+    if (!auth.user) throw new Error("Please sign in.");
+  
+    const { data: stored, error: readError } = await supabase
+      .from("user_progress")
+      .select("data")
+      .eq("user_id", auth.user.id)
+      .maybeSingle();
+  
+    if (readError) throw readError;
+  
+    const existing: PrimeProgress =
+      stored?.data &&
+      typeof stored.data === "object" &&
+      !Array.isArray(stored.data)
+        ? stored.data as PrimeProgress
+        : {};
+  
+    const diary =
+      existing.foodDiary &&
+      typeof existing.foodDiary === "object" &&
+      !Array.isArray(existing.foodDiary)
+        ? existing.foodDiary as FoodDiary
+        : {};
+  
+    const entries = [...(diary[dayKey] ?? []), entry];
+  
+    const updated: PrimeProgress = {
+      ...existing,
+      foodDiary: {
+        ...diary,
+        [dayKey]: entries
+      },
+      daily: {
+        ...(existing.daily ?? {}),
+        [dayKey]: {
+          ...(existing.daily?.[dayKey] ?? {}),
+          meals: entries.length
+        }
+      }
+    };
+  
+    const { error } = await supabase
+      .from("user_progress")
+      .upsert(
+        { user_id: auth.user.id, data: updated },
+        { onConflict: "user_id" }
+      );
+  
+    if (error) throw error;
+  
+    return updated;
+  }
+  
+  export async function deleteFoodDiaryEntry(
+    dayKey: string,
+    entryId: string
+  ): Promise<PrimeProgress> {
+    const { data: auth, error: authError } =
+      await supabase.auth.getUser();
+  
+    if (authError) throw authError;
+    if (!auth.user) throw new Error("Please sign in.");
+  
+    const { data: stored, error: readError } = await supabase
+      .from("user_progress")
+      .select("data")
+      .eq("user_id", auth.user.id)
+      .maybeSingle();
+  
+    if (readError) throw readError;
+  
+    const existing: PrimeProgress =
+      stored?.data &&
+      typeof stored.data === "object" &&
+      !Array.isArray(stored.data)
+        ? stored.data as PrimeProgress
+        : {};
+  
+    const diary =
+      existing.foodDiary &&
+      typeof existing.foodDiary === "object" &&
+      !Array.isArray(existing.foodDiary)
+        ? existing.foodDiary as FoodDiary
+        : {};
+  
+    const entries = (diary[dayKey] ?? []).filter(
+      entry => entry.id !== entryId
+    );
+  
+    const updated: PrimeProgress = {
+      ...existing,
+      foodDiary: { ...diary, [dayKey]: entries },
+      daily: {
+        ...(existing.daily ?? {}),
+        [dayKey]: {
+          ...(existing.daily?.[dayKey] ?? {}),
+          meals: entries.length
+        }
+      }
+    };
+  
+    const { error } = await supabase
+      .from("user_progress")
+      .upsert(
+        { user_id: auth.user.id, data: updated },
+        { onConflict: "user_id" }
+      );
+  
+    if (error) throw error;
+  
+    return updated;
+  }
+  
+
